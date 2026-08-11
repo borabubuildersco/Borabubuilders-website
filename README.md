@@ -1,24 +1,16 @@
-# Borabu Builders Website — V3
+# Borabu Builders Website V4
 
-Production-oriented redesign for Borabu Builders Co. Ltd.
+Visual direction: brighter V2 interface restored, with the current production enquiry functionality preserved.
 
-## Pages
-- Home
-- About
-- Services
-- Projects
-- Contact / project enquiry
+## What changed
+- Restored the brighter green / white visual direction and V2 page layout.
+- Every **Start a project** CTA opens the enquiry form immediately in a responsive modal.
+- Retains Netlify form name `project-enquiry` and the exact automation field names: `name`, `company`, `email`, `phone`, `service`, `location`, `message`, `project-file`.
+- Retains file upload for PDF, Word, JPG and PNG.
+- Uses `info@borabubuilders.com` and `borabubuilders.com`.
+- Adds a dedicated `thank-you.html` success page.
 
-## V3 changes
-- New editorial, premium homepage direction inspired by the structure and restraint of modern consulting websites.
-- Brighter Borabu green/purple brand system with more white/cream space.
-- Stronger logo presentation and simplified navigation.
-- New narrative flow: hero → Why Borabu → capabilities → sectors → project gap → work → heritage → enquiry.
-- Updated website/email references to borabubuilders.com and info@borabubuilders.com.
-- Contact form includes optional file upload for plans/supporting documents using Netlify Forms.
-- Honeypot spam field added.
+## Deployment
+Upload the contents of this folder to the existing GitHub repository. Netlify should redeploy automatically.
 
-## Netlify
-No build command is required. Publish from the repository root.
-
-File uploads through Netlify Forms are subject to Netlify's platform limits; the current documented maximum request size is 8 MB.
+After deployment, confirm Netlify still detects the `project-enquiry` form before testing the Make / Google Drive automation.
