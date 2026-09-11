@@ -15,3 +15,39 @@ const closeModal=()=>{modal.classList.remove('open');modal.setAttribute('aria-hi
 document.querySelectorAll('.project-trigger').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();openModal()}));
 modal.querySelectorAll('[data-close-modal]').forEach(el=>el.addEventListener('click',closeModal));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal()});
+
+
+// Protected certificate preview viewer (deterrence only; screenshots can never be fully prevented in a browser).
+const certificateTriggers=document.querySelectorAll('.certificate-trigger');
+if(certificateTriggers.length){
+  const certificateViewer=document.createElement('div');
+  certificateViewer.className='certificate-viewer';
+  certificateViewer.setAttribute('aria-hidden','true');
+  certificateViewer.innerHTML=`<div class="certificate-viewer-backdrop" data-close-certificate></div><div class="certificate-viewer-panel" role="dialog" aria-modal="true" aria-labelledby="certificate-viewer-title"><div class="certificate-viewer-head"><h3 id="certificate-viewer-title">Certificate preview</h3><button class="certificate-viewer-close" type="button" aria-label="Close certificate preview" data-close-certificate>×</button></div><div class="certificate-viewer-stage"><img class="protected-certificate" alt="Certificate preview" draggable="false"><div class="certificate-viewer-shield" aria-hidden="true"></div></div><div class="certificate-viewer-foot">Watermarked website preview for verification. Official copies are available directly from Borabu Builders on request.</div></div>`;
+  document.body.appendChild(certificateViewer);
+  const certImg=certificateViewer.querySelector('img');
+  const certTitle=certificateViewer.querySelector('#certificate-viewer-title');
+  const openCertificate=(trigger)=>{
+    certImg.src=trigger.dataset.certSrc;
+    certImg.alt=trigger.dataset.certTitle || 'Certificate preview';
+    certTitle.textContent=trigger.dataset.certTitle || 'Certificate preview';
+    certificateViewer.classList.add('open');
+    certificateViewer.setAttribute('aria-hidden','false');
+    document.body.classList.add('certificate-viewer-open');
+    certificateViewer.querySelector('.certificate-viewer-close')?.focus();
+  };
+  const closeCertificate=()=>{
+    certificateViewer.classList.remove('open');
+    certificateViewer.setAttribute('aria-hidden','true');
+    document.body.classList.remove('certificate-viewer-open');
+    certImg.removeAttribute('src');
+  };
+  certificateTriggers.forEach(trigger=>trigger.addEventListener('click',()=>openCertificate(trigger)));
+  certificateViewer.querySelectorAll('[data-close-certificate]').forEach(el=>el.addEventListener('click',closeCertificate));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&certificateViewer.classList.contains('open'))closeCertificate()});
+  document.querySelectorAll('.protected-certificate').forEach(img=>{
+    img.addEventListener('contextmenu',e=>e.preventDefault());
+    img.addEventListener('dragstart',e=>e.preventDefault());
+  });
+  certificateViewer.addEventListener('contextmenu',e=>e.preventDefault());
+}
